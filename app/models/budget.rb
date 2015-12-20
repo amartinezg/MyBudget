@@ -1,0 +1,2 @@
+class Budget < Movement 
+end
