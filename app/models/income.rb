@@ -1,0 +1,2 @@
+class Income < Movement 
+end
