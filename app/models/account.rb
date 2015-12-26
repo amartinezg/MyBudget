@@ -12,6 +12,7 @@
 #
 
 class Account < ActiveRecord::Base
+  self.inheritance_column = nil
   monetize :balance_cents, presence: true
   has_many :movements
 end
