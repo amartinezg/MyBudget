@@ -34,15 +34,24 @@ FactoryGirl.define do
       currency :usd
     end
 
+    trait :with_name do
+      name "Mastercard Credit Card"
+    end
+
+    trait :without_name do
+      name nil
+    end
+
     trait :with_balance do
-      balance_cents Money.new 1000
+      balance Money.new 1000
     end
 
     trait :with_negative_balance do
-      balance_cents Money.new -1000
+      balance Money.new -1000
     end
 
-    factory :cash_with_balance,    traits: [:cash, :with_balance]
+    factory :cash_with_balance,    traits: [:cash, :with_balance, :with_name]
+    factory :cash_withouth_name,   traits: [:cash, :without_name]
     factory :account_with_movements do
 
     end

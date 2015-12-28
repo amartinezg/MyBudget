@@ -13,6 +13,9 @@
 
 class Account < ActiveRecord::Base
   self.inheritance_column = nil
-  monetize :balance_cents, presence: true
+  monetize :balance_cents, presence: true, as: "balance"
   has_many :movements
+
+  validates_presence_of :name, :type
+  validates_inclusion_of :type, in: %w(savings credit cash)
 end
