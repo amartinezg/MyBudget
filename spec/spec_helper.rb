@@ -17,6 +17,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'money-rails/test_helpers'
+require 'shoulda/matchers'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -91,4 +92,12 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    require "active_model"
+    with.library :active_model
+  end
 end
