@@ -2,13 +2,13 @@
 #
 # Table name: accounts
 #
-#  id            :integer          not null, primary key
-#  name          :string
-#  type          :string
-#  balance_cents :integer
-#  currency      :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id               :integer          not null, primary key
+#  name             :string
+#  type             :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  balance_cents    :integer          default(0), not null
+#  balance_currency :string           default("COP"), not null
 #
 
 class Account < ActiveRecord::Base
@@ -16,6 +16,6 @@ class Account < ActiveRecord::Base
   monetize :balance_cents, presence: true, as: "balance"
   has_many :movements
 
-  validates_presence_of :name, :type
+  validates_presence_of :name, :type, :balance_cents
   validates_inclusion_of :type, in: %w(savings credit cash)
 end
