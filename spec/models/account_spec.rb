@@ -27,6 +27,8 @@ RSpec.describe Account, type: :model do
     it { is_expected.to validate_presence_of(:type) }
     it { is_expected.to validate_presence_of(:balance_cents) }
     it { is_expected.to validate_inclusion_of(:type).in_array(['savings', 'credit', 'cash']) }
+    it { should validate_uniqueness_of(:name).
+      scoped_to(:type, :balance_currency).with_message('Account already exists') }
     it { should have_many(:movements) }
   end
 
