@@ -2,13 +2,13 @@
 #
 # Table name: accounts
 #
-#  id            :integer          not null, primary key
-#  name          :string
-#  type          :string
-#  balance_cents :integer
-#  currency      :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id               :integer          not null, primary key
+#  name             :string
+#  type             :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  balance_cents    :integer          default(0), not null
+#  balance_currency :string           default("COP"), not null
 #
 
 FactoryGirl.define do
@@ -50,10 +50,18 @@ FactoryGirl.define do
       balance Money.new -1000
     end
 
+    trait :with_movements do
+      transient do
+        movements_count 5
+      end
+
+      after(:create) do |account, evaluator|
+        create_list(:movement, evaluator.movements_count, account: account)
+      end
+    end
+
     factory :cash_with_balance,    traits: [:cash, :with_balance, :with_name]
     factory :cash_withouth_name,   traits: [:cash, :without_name]
-    factory :account_with_movements do
-
-    end
+    factory :account_with_movements, traits: [:cash, :with_balance, :with_name, :with_movements]
   end
 end
