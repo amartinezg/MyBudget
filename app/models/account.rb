@@ -18,4 +18,5 @@ class Account < ActiveRecord::Base
 
   validates_presence_of :name, :type, :balance_cents
   validates_inclusion_of :type, in: %w(savings credit cash)
+  validates_uniqueness_of :name, scope: [:type, :balance_currency], message: "Account already exists"
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151229045414) do
+ActiveRecord::Schema.define(version: 20151229052618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 20151229045414) do
     t.integer  "balance_cents",    default: 0,     null: false
     t.string   "balance_currency", default: "COP", null: false
   end
+
+  add_index "accounts", ["name", "type", "balance_currency"], name: "index_accounts_on_name_and_type_and_balance_currency", unique: true, using: :btree
 
   create_table "movements", force: :cascade do |t|
     t.string   "category"
