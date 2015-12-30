@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151229052618) do
+ActiveRecord::Schema.define(version: 20151230181625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,13 +31,14 @@ ActiveRecord::Schema.define(version: 20151229052618) do
     t.string   "category"
     t.string   "sub_category"
     t.string   "notes"
-    t.integer  "amount_cents"
     t.string   "type"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.date     "period"
-    t.string   "account_id",   null: false
+    t.string   "account_id"
     t.date     "date"
+    t.integer  "amount_cents",    default: 0,     null: false
+    t.string   "amount_currency", default: "COP", null: false
   end
 
 end
