@@ -1,0 +1,42 @@
+income: ["salary",
+    "third",
+    "freelance",
+    "other"]
+transport: ["metro",
+    "cab",
+    "bus",
+    "gas"]
+home: ["rent",
+    "mortgage",
+    "house"]
+utilities: ["EPM",
+    "UNE",
+    "cellphone",
+    "cable"]
+food: ["groceries",
+    "restaurant",
+    "mecato",
+    "licour"]
+departmental: ["clothing",
+    "books",
+    "magazines",
+    "apps",
+    "hardware",
+    "toys"]
+entertainment: ["movies",
+    "sports",
+    "journeys",
+    "theater",
+    "stadium"]
+medical: ["insurance",
+    "medicines",
+    "appointments"]
+misc: ["air tickets",
+    "hotel",
+    "gift",
+    "other"]
+bank: ["fee",
+    "interests",
+    "debid note",
+    "credit note",
+    "other"]
