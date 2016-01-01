@@ -30,6 +30,7 @@ RSpec.describe Account, type: :model do
     it { should validate_uniqueness_of(:name).
       scoped_to(:type, :balance_currency).with_message('Account already exists') }
     it { should have_many(:movements) }
+    it { should have_db_index([:name, :type, :balance_currency])}
   end
 
 end

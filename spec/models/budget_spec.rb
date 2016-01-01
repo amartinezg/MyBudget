@@ -19,5 +19,23 @@
 require 'rails_helper'
 
 RSpec.describe Budget, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  describe "#amount" do
+    let (:budget) { build :valid_budget}
+    it "should be monetized" do
+      expect(budget).to monetize(:amount).with_currency(:cop)
+    end
+  end
+
+  describe "ActiveModel validations" do
+    it { is_expected.to validate_presence_of(:category) }
+    it { is_expected.to validate_presence_of(:period) }
+    it { is_expected.to validate_presence_of(:amount_cents) }
+    it { should allow_value('Budget').for(:type) }
+    it { is_expected.to validate_absence_of(:account).
+      with_message("must be no account associated") }
+    it { is_expected.to validate_absence_of(:date).
+      with_message("must not have date of movement") }
+  end
+
 end
