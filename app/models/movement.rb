@@ -14,10 +14,13 @@
 #  date            :date
 #  amount_cents    :integer          default(0), not null
 #  amount_currency :string           default("COP"), not null
+#  aasm_state      :string
 #
 
 class Movement < ActiveRecord::Base
   include Categories
+  include AASM
+
   monetize :amount_cents, presence: true, as: "amount"
   belongs_to :account
   validates_presence_of :category, :type, :amount_cents
@@ -28,4 +31,7 @@ class Movement < ActiveRecord::Base
   scope :expenses, -> { where(type: 'Expense') }
   scope :incomes, -> { where(type: 'Income') }
 
+  aasm do
+    state :created, :initial => true
+  end
 end

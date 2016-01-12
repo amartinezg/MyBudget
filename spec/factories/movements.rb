@@ -14,6 +14,7 @@
 #  date            :date
 #  amount_cents    :integer          default(0), not null
 #  amount_currency :string           default("COP"), not null
+#  aasm_state      :string
 #
 
 FactoryGirl.define do
@@ -47,6 +48,11 @@ FactoryGirl.define do
       period Time.now.beginning_of_month.next_month.to_date
     end
 
+    trait :with_expired_period do
+      aasm_state "running"
+      period Time.now.beginning_of_month.last_month.to_date
+    end
+
     trait :with_invalid_period do
       period Time.now.beginning_of_month.to_date
     end
@@ -55,6 +61,7 @@ FactoryGirl.define do
       date nil
     end
 
-    factory :valid_budget,  traits: [:budget, :with_category, :with_sub_category, :with_period, :without_date]
+    factory :valid_budget,    traits: [:budget, :with_category, :with_sub_category, :with_period, :without_date]
+    factory :expired_budget,  traits: [:budget, :with_category, :with_sub_category, :with_expired_period, :without_date]
   end
 end

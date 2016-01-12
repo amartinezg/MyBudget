@@ -14,6 +14,7 @@
 #  date            :date
 #  amount_cents    :integer          default(0), not null
 #  amount_currency :string           default("COP"), not null
+#  aasm_state      :string
 #
 
 require 'rails_helper'

@@ -14,6 +14,7 @@
 #  date            :date
 #  amount_cents    :integer          default(0), not null
 #  amount_currency :string           default("COP"), not null
+#  aasm_state      :string
 #
 
 class Budget < Movement
@@ -23,7 +24,28 @@ class Budget < Movement
   validates_absence_of :account, message: "must be no account associated"
   validates_absence_of :date, message: "must not have date of movement"
 
+  aasm do
+    state :running
+    state :closed
+
+    event :run do
+      transitions :from => :created, :to => :running, :if => :can_run?
+    end
+
+    event :close do
+      transitions :from => :running, :to => :closed, :if => :can_close?
+    end
+  end
+
   private
+  def can_run?
+    self.period == Date.today.beginning_of_month
+  end
+
+  def can_close?
+    self.period < Date.today.beginning_of_month
+  end
+
   def period_greater_than_this_month
     errors.add(:base, "Period should be at least of the next month.") unless period.try(:>, Date.today.end_of_month)
   end
