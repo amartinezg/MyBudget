@@ -26,8 +26,13 @@ class Income < Movement
   aasm do
     state :reconciled
 
-    event :reconcile do
+    event :reconcile, :before_transaction => :increment_account_balance do
       transitions :from => :created, :to => :reconciled
     end
+  end
+
+  private
+  def increment_account_balance
+    self.account.increment_balance(self.amount)
   end
 end

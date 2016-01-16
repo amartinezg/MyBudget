@@ -31,8 +31,13 @@ class Expense < Movement
       transitions :from => :reconciled, :to => :billed
     end
 
-    event :reconcile do
+    event :reconcile, :before_transaction => :decrement_account_balance do
       transitions :from => :created, :to => :reconciled
     end
+  end
+
+  private
+  def decrement_account_balance
+    self.account.decrement_balance(self.amount)
   end
 end
