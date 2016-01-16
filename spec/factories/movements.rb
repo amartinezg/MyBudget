@@ -18,19 +18,10 @@
 #
 
 FactoryGirl.define do
-  factory :movement do
-    notes     "Some notes"
-    amount_cents 100
-    association :account, factory: :cash_with_balance
-  end
-
   factory :budget do
-    notes     "Some notes"
-    amount_cents 100
-
-    trait :budget do
-      type "Budget"
-    end
+    type          "Budget"
+    notes         "Some notes"
+    amount_cents  100
 
     trait :with_category do
       category "income"
@@ -61,7 +52,26 @@ FactoryGirl.define do
       date nil
     end
 
-    factory :valid_budget,    traits: [:budget, :with_category, :with_sub_category, :with_period, :without_date]
-    factory :expired_budget,  traits: [:budget, :with_category, :with_sub_category, :with_expired_period, :without_date]
+    factory :valid_budget,    traits: [:with_category, :with_sub_category, :with_period, :without_date]
+    factory :expired_budget,  traits: [:with_category, :with_sub_category, :with_expired_period, :without_date]
+  end
+
+  factory :income do
+    type          "Income"
+    notes         "Income from salary"
+    amount_cents  100
+    date          Date.today
+    association :account, factory: :cash_with_balance
+
+    trait :with_category do
+      category "income"
+    end
+
+    trait :with_sub_category do
+      sub_category "freelance"
+    end
+
+    factory :valid_income,  traits: [:with_category, :with_sub_category]
+
   end
 end

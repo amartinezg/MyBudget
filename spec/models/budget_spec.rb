@@ -32,6 +32,7 @@ RSpec.describe Budget, type: :model do
     it { is_expected.to validate_presence_of(:category) }
     it { is_expected.to validate_presence_of(:period) }
     it { is_expected.to validate_presence_of(:amount_cents) }
+    it { should validate_numericality_of(:amount_cents).is_greater_than(0) }
     it { should allow_value('Budget').for(:type) }
     it { is_expected.to validate_absence_of(:account).
       with_message("must be no account associated") }
