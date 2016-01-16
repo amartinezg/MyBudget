@@ -40,24 +40,50 @@ RSpec.describe Budget, type: :model do
   end
 
   describe "AASM validations" do
-    let (:expired_budget) { build :expired_budget}
-    it { expect(expired_budget).to transition_from(:running).to(:closed).on_event(:close) }
-    it { expect(expired_budget).to have_state(:running) }
-    it { expect(expired_budget).not_to have_state(:created) }
-    it { expect(expired_budget).not_to have_state(:closed) }
-    it { expect(expired_budget).to allow_event(:close) }
-    it { expect(expired_budget).not_to allow_event(:run) }
+    describe "with valid budget" do
+      let (:budget) { build :valid_budget}
 
-    let (:budget) { build :valid_budget}
-    it {
-      allow(Date).to receive_messages(:today => Time.now.beginning_of_month.next_month.to_date)
-      expect(budget).to allow_event(:run)
-      expect(budget).to transition_from(:created).to(:running).on_event(:run)
-    }
-    it { expect(budget).to have_state(:created) }
-    it { expect(budget).not_to have_state(:running) }
-    it { expect(budget).not_to have_state(:closed) }
-    it { expect(budget).not_to allow_event(:close) }
+      it "should run when period belongs to current month" do
+        allow(Date).to receive_messages(:today => Time.now.beginning_of_month.next_month.to_date)
+        expect(budget).to allow_event(:run)
+        expect(budget).not_to allow_event(:close)
+        expect(budget).to transition_from(:created).to(:running).on_event(:run)
+        expect(budget).to have_state(:running)
+        expect(budget).not_to have_state(:created)
+        expect(budget).not_to have_state(:closed)
+      end
+
+      it "should not run when period does not belong to current month" do
+        expect(budget).not_to allow_event(:run)
+        expect(budget).not_to allow_event(:close)
+        expect(budget).to have_state(:created)
+        expect(budget).not_to have_state(:running)
+        expect(budget).not_to have_state(:closed)
+        expect(budget).to_not allow_transition_to(:running)
+        expect(budget).to_not allow_transition_to(:closed)
+      end
+    end
+
+    describe "with expired budget" do
+      let (:expired_budget) { build :expired_budget}
+
+      it "should close when period belongs to last month" do
+        expect(expired_budget).to have_state(:running)
+        expect(expired_budget).to allow_event(:close)
+        expect(expired_budget).to transition_from(:running).to(:closed).on_event(:close)
+        expect(expired_budget).not_to have_state(:created)
+        expect(expired_budget).to have_state(:closed)
+        expect(expired_budget).not_to allow_event(:run)
+      end
+
+      it "should not close when period does not belongs to last month" do
+        allow(Date).to receive_messages(:today => Time.now.beginning_of_month.last_month.to_date)
+        expect(expired_budget).to_not allow_transition_to(:closed)
+        expect(expired_budget).to have_state(:running)
+        expect(expired_budget).not_to have_state(:created)
+        expect(expired_budget).not_to have_state(:closed)
+      end
+    end
   end
 
 end
