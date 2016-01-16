@@ -26,6 +26,8 @@ class Movement < ActiveRecord::Base
   validates_presence_of :category, :type, :amount_cents
   validates_inclusion_of :type, in: %w(Budget Expense Income)
   validates_inclusion_of :category, in: :categories
+  validates_inclusion_of :sub_category, in: :check_sub_category, if: :category
+  validate :account_currency, if: :account
 
   scope :budgets, -> { where(type: 'Budget') }
   scope :expenses, -> { where(type: 'Expense') }
@@ -33,5 +35,15 @@ class Movement < ActiveRecord::Base
 
   aasm do
     state :created, :initial => true
+  end
+
+  private
+  def check_sub_category
+    sub_categories_for(self.category) || []
+  end
+
+  def account_currency
+    message = "Amount's currency should be equal to account's balance currency"
+    errors.add(:base, message) if self.account.balance.currency != self.amount.currency
   end
 end
