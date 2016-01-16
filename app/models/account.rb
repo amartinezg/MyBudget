@@ -19,4 +19,10 @@ class Account < ActiveRecord::Base
   validates_presence_of :name, :type, :balance_cents
   validates_inclusion_of :type, in: %w(savings credit cash)
   validates_uniqueness_of :name, scope: [:type, :balance_currency], message: "Account already exists"
+
+  ["increment", "decrement"].each do |action|
+    define_method("#{action}_balance") do |amount|
+      self.send("#{action}!".to_sym, :balance_cents, amount.cents)
+    end
+  end
 end
