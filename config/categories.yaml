@@ -1,14 +1,16 @@
 income: ["salary",
     "third",
     "freelance",
-    "other"]
+    "other",
+    "interests"]
 transport: ["metro",
     "cab",
     "bus",
     "gas"]
 home: ["rent",
     "mortgage",
-    "house"]
+    "house",
+    "furniture"]
 utilities: ["EPM",
     "UNE",
     "cellphone",
@@ -40,3 +42,7 @@ bank: ["fee",
     "debid note",
     "credit note",
     "other"]
+third: ["loan"]
+transfer: ["credit card",
+    "cash",
+    "inversion"]
