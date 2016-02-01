@@ -38,6 +38,6 @@ class Expense < Movement
 
   private
   def decrement_account_balance
-    self.account.decrement_balance(self.amount)
+    self.account.decrement_balance(self.amount.abs)
   end
 end
