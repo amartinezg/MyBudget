@@ -21,18 +21,15 @@ class Income < Movement
   validates_presence_of :date
   validates_presence_of :account
   validates :period, absence: true
-  validates_numericality_of :amount_cents, greater_than: 0
+  validates_numericality_of :amount_cents, greater_than: 0 if self.try(:account).try(:is_not_credit?)
+  validates_numericality_of :amount_cents, less_than: 0 if self.try(:account).try(:is_credit?)
 
   aasm do
     state :reconciled
 
-    event :reconcile, :before_transaction => :increment_account_balance do
+    event :reconcile, :after_transaction => :increment_account_balance do
       transitions :from => :created, :to => :reconciled
     end
   end
 
-  private
-  def increment_account_balance
-    self.account.increment_balance(self.amount)
-  end
 end

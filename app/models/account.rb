@@ -17,25 +17,36 @@ class Account < ActiveRecord::Base
   has_many :movements
 
   validates_presence_of :name, :type, :balance_cents
-  validates_inclusion_of :type, in: %w(savings credit cash)
+  validates_inclusion_of :type, in: %w(savings credit cash inversion)
   validates_uniqueness_of :name, scope: [:type, :balance_currency], message: "Account already exists"
 
   XML_ATTRS = {date: "FECHA", category: "CATEGORIA", sub_category: "SUB_CATEGORIA", notes: "DESCRIPCIÓN"}
 
-  ["increment", "decrement"].each do |action|
-    define_method("#{action}_balance") do |amount|
-      self.send("#{action}!".to_sym, :balance_cents, amount.cents)
-    end
+  def increment_balance(amount)
+    increment!(:balance_cents, amount.cents)
+  end
+
+  def is_credit?
+    type == "credit"
+  end
+
+  def is_not_credit?
+    !is_credit?
   end
 
   def load_movements_from_xml(path)
     load_xml(path)
-    @xml.xpath("//Movimiento").map do |movement|
-      mov = create_instance(movement.xpath("VALOR"))
-      XML_ATTRS.each do |key, value|
-        mov.send("#{key}=".to_sym, movement.xpath(value).text)
+    Account.transaction do
+      Movement.transaction do
+        @xml.xpath("//Movimiento").map do |movement|
+          mov = create_instance(movement.xpath("VALOR"))
+          XML_ATTRS.each do |key, value|
+            mov.send("#{key}=".to_sym, movement.xpath(value).text)
+          end
+          mov.save!
+          mov.reconcile!
+        end
       end
-      mov.reconcile!
     end
   end
 
@@ -46,7 +57,20 @@ class Account < ActiveRecord::Base
 
   def create_instance(amount)
     amount = Money.new(amount.text.gsub(/[.,]/,""), balance_currency)
-    attributes = {amount: amount, account: self}
-    amount > 0 ? Income.new(attributes) : Expense.new(attributes)
+    attributes = {amount_currency: balance_currency, amount: amount, account: self}
+    candidates = {
+      candidate_expense: Expense.new(attributes),
+      candidate_income: Income.new(attributes)
+    }
+    candidates.find {|method, _| self.send method, amount}.last
   end
+
+  def candidate_expense(amount)
+    is_credit? && amount > 0 || !is_credit? && amount < 0
+  end
+
+  def candidate_income(amount)
+    is_credit? && amount < 0 || !is_credit? && amount > 0
+  end
+
 end

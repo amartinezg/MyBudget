@@ -46,4 +46,8 @@ class Movement < ActiveRecord::Base
     message = "Amount's currency should be equal to account's balance currency"
     errors.add(:base, message) if self.account.balance.currency != self.amount.currency
   end
+
+  def increment_account_balance
+    self.account.increment_balance(self.amount)
+  end
 end

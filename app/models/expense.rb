@@ -21,7 +21,8 @@ class Expense < Movement
   validates_presence_of :date
   validates_presence_of :account
   validates :period, absence: true
-  validates_numericality_of :amount_cents, less_than: 0
+  validates_numericality_of :amount_cents, greater_than: 0 if self.try(:account).try(:is_credit?)
+  validates_numericality_of :amount_cents, less_than: 0 if self.try(:account).try(:is_not_credit?)
 
   aasm do
     state :billed
@@ -31,13 +32,8 @@ class Expense < Movement
       transitions :from => :reconciled, :to => :billed
     end
 
-    event :reconcile, :before_transaction => :decrement_account_balance do
+    event :reconcile, :after_transaction => :increment_account_balance do
       transitions :from => :created, :to => :reconciled
     end
-  end
-
-  private
-  def decrement_account_balance
-    self.account.decrement_balance(self.amount.abs)
   end
 end
