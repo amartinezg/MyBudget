@@ -2,7 +2,8 @@ income: ["salary",
     "third",
     "freelance",
     "other",
-    "interests"]
+    "interests",
+    "virtual"]
 transport: ["metro",
     "cab",
     "bus",
@@ -24,7 +25,8 @@ departmental: ["clothing",
     "magazines",
     "apps",
     "hardware",
-    "toys"]
+    "toys",
+    "apps_subscriptions"]
 entertainment: ["movies",
     "sports",
     "journeys",
@@ -36,7 +38,8 @@ medical: ["insurance",
 misc: ["air tickets",
     "hotel",
     "gift",
-    "other"]
+    "other",
+    "nonprofit entity"]
 bank: ["fee",
     "interests",
     "debid note",
