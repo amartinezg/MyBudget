@@ -34,7 +34,7 @@ RSpec.describe Income, type: :model do
     it { is_expected.to validate_presence_of(:category) }
     it { is_expected.to validate_presence_of(:type) }
     it { is_expected.to validate_presence_of(:amount_cents) }
-    it { should validate_numericality_of(:amount_cents).is_greater_than(0) }
+    it { should validate_numericality_of(:amount_cents).is_less_than(0) }
     it { is_expected.to validate_absence_of(:period) }
     it { should allow_value('Income').for(:type) }
     it { should allow_value('income').for(:category) }
