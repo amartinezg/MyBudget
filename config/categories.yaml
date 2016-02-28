@@ -3,11 +3,13 @@ income: ["salary",
     "freelance",
     "other",
     "interests",
-    "virtual"]
+    "virtual",
+    "transfer_in"]
 transport: ["metro",
     "cab",
     "bus",
-    "gas"]
+    "gas",
+    "toll"]
 home: ["rent",
     "mortgage",
     "house",
@@ -26,7 +28,8 @@ departmental: ["clothing",
     "apps",
     "hardware",
     "toys",
-    "apps_subscriptions"]
+    "apps_subscriptions",
+    "barber_shop"]
 entertainment: ["movies",
     "sports",
     "journeys",
@@ -35,17 +38,17 @@ entertainment: ["movies",
 medical: ["insurance",
     "medicines",
     "appointments"]
-misc: ["air tickets",
+misc: ["air_tickets",
     "hotel",
     "gift",
     "other",
-    "nonprofit entity"]
+    "nonprofit_entity"]
 bank: ["fee",
     "interests",
-    "debid note",
-    "credit note",
+    "debit_note",
+    "credit_note",
     "other"]
 third: ["loan"]
-transfer: ["credit card",
+transfer: ["credit_card",
     "cash",
     "inversion"]
