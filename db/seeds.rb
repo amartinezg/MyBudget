@@ -23,9 +23,7 @@ Account.create(name: "Mastercard credit card", type: "credit", balance: Money.ne
 Account.create(name: "US MasterCard credit card", type: "credit", :balance_currency => "USD", balance: Money.new(random_debit_money, "USD"))
 Account.create(name: "Savings Payroll", type: "savings", balance: Money.new(random_credit_money))
 
-a = Budget.create(category: "income", sub_category: "salary", period: period, amount: Money.new(random_credit_money))
-p a.valid?
-p a.errors
+Budget.create(category: "income", sub_category: "salary", period: period, amount: Money.new(random_credit_money))
 Budget.create(category: "transport", sub_category: "metro", period: period, amount: Money.new(random_credit_money))
 Budget.create(category: "transport", sub_category: "cab", period: period, amount: Money.new(random_credit_money))
 Budget.create(category: "transport", sub_category: "bus", period: period, amount: Money.new(random_credit_money))
