@@ -20,7 +20,7 @@
 class Budget < Movement
   validates :period, presence: true
   validates_numericality_of :amount_cents, greater_than: 0
-  validate :period_greater_than_this_month
+  validate :period_greater_than_this_month, if: :new_record?
   validates_absence_of :account, message: "must be no account associated"
   validates_absence_of :date, message: "must not have date of movement"
 

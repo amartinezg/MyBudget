@@ -26,6 +26,11 @@ class Income < Movement
 
   aasm do
     state :reconciled
+    state :closed
+
+    event :bill do
+      transitions :from => :reconciled, :to => :billed
+    end
 
     event :reconcile, :after_transaction => :increment_account_balance do
       transitions :from => :created, :to => :reconciled

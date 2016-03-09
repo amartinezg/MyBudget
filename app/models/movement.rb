@@ -35,6 +35,11 @@ class Movement < ActiveRecord::Base
 
   aasm do
     state :created, :initial => true
+    state :closed
+
+    event :close do
+      transitions :from => :reconciled, :to => :closed, :if => :can_close?
+    end
   end
 
   private
@@ -49,5 +54,9 @@ class Movement < ActiveRecord::Base
 
   def increment_account_balance
     self.account.increment_balance(self.amount)
+  end
+
+  def can_close?
+    self.date < Date.today.beginning_of_month
   end
 end
