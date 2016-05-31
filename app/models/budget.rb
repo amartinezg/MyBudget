@@ -18,9 +18,11 @@
 #
 
 class Budget < Movement
+  attr_accessor :skip_month_validation
+
   validates :period, presence: true
   validates_numericality_of :amount_cents, greater_than: 0
-  validate :period_greater_than_this_month, if: :new_record?
+  validate :period_greater_than_this_month, if: lambda { |r| r.new_record? && !r.skip_month_validation }
   validates_absence_of :account, message: "must be no account associated"
   validates_absence_of :date, message: "must not have date of movement"
 
