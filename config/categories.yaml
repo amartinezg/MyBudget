@@ -29,10 +29,10 @@ departmental: ["clothing",
     "hardware",
     "toys",
     "apps_subscriptions",
-    "barber_shop"]
+    "barber_shop",
+    "personal_items"]
 entertainment: ["movies",
     "sports",
-    "journeys",
     "theater",
     "stadium"]
 medical: ["insurance",
@@ -42,7 +42,8 @@ misc: ["air_tickets",
     "hotel",
     "gift",
     "other",
-    "nonprofit_entity"]
+    "nonprofit_entity",
+    "trip"]
 bank: ["fee",
     "interests",
     "debit_note",
