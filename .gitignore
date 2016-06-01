@@ -13,3 +13,4 @@
 /tmp
 .byebug_history
 db/production_seed.rb
+public/reconciled/
