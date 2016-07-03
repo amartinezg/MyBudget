@@ -36,16 +36,22 @@ class Account < ActiveRecord::Base
 
   def load_movements_from_xml(path)
     load_xml(path)
-    Account.transaction do
-      Movement.transaction do
-        @xml.xpath("//Movimiento").map do |movement|
-          mov = create_instance(movement.xpath("VALOR"))
-          XML_ATTRS.each do |key, value|
-            mov.send("#{key}=".to_sym, movement.xpath(value).text)
+    if valid_xml_schema?
+      Account.transaction do
+        Movement.transaction do
+          @xml.xpath("//Movimiento").map do |movement|
+            mov = create_instance(movement.xpath("VALOR"))
+            XML_ATTRS.each do |key, value|
+              mov.send("#{key}=".to_sym, movement.xpath(value).text)
+            end
+            mov.save!
+            mov.reconcile!
           end
-          mov.save!
-          mov.reconcile!
         end
+      end
+    else
+      @xsd.validate(@xml).each do |error|
+        puts error.message
       end
     end
   end
@@ -76,6 +82,11 @@ class Account < ActiveRecord::Base
 
   def candidate_error(amount)
     amount.nil? || amount == 0
+  end
+
+  def valid_xml_schema?
+    @xsd = Nokogiri::XML::Schema(File.read(Rails.root.join('lib', 'schemas', 'csv_processer.xsd')))
+    @xsd.valid? @xml
   end
 
 end

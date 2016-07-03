@@ -42,7 +42,7 @@ class CSVProcesser
             xml.FECHA row[:date]
             xml.CATEGORIA row[:category]
             xml.SUB_CATEGORIA row[:subcategory]
-            xml.DESCRIPCIÓN row[:notes]
+            xml.DESCRIPCION row[:notes]
             xml.VALOR row[:amount]
           }
         end
