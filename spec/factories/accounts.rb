@@ -35,7 +35,9 @@ FactoryGirl.define do
     end
 
     trait :with_name do
-      name "Mastercard Credit Card"
+      sequence :name do |n|
+        "Account # #{n}"
+      end
     end
 
     trait :without_name do
@@ -63,5 +65,7 @@ FactoryGirl.define do
     factory :cash_with_balance,    traits: [:cash, :with_balance, :with_name]
     factory :cash_withouth_name,   traits: [:cash, :without_name]
     factory :account_with_movements, traits: [:cash, :with_balance, :with_name, :with_movements]
+    factory :credit_card_with_balance, traits: [:credit, :with_balance, :with_name]
+
   end
 end

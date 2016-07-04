@@ -21,19 +21,30 @@ class Expense < Movement
   validates_presence_of :date
   validates_presence_of :account
   validates :period, absence: true
-  validates_numericality_of :amount_cents, greater_than: 0 if self.try(:account).try(:is_credit?)
-  validates_numericality_of :amount_cents, less_than: 0 if self.try(:account).try(:is_not_credit?)
+  validate :amount_numericality, if: :account
+  validates_inclusion_of :type, in: %w(Expense)
 
   aasm do
     state :billed
     state :reconciled
 
     event :bill do
-      transitions :from => :reconciled, :to => :billed
+      transitions from: :reconciled, to: :billed
     end
 
-    event :reconcile, :after_transaction => :increment_account_balance do
-      transitions :from => :created, :to => :reconciled
+    event :reconcile, after_transaction: :increment_account_balance do
+      transitions from: :created, to: :reconciled
     end
+  end
+
+  private
+  def amount_numericality
+    message = "must be #{credit_account ? "greater" : "less"} than 0"
+    errors.add(:amount_cents, message) if invalid_amount?
+  end
+
+  def invalid_amount?
+    non_credit_account && self.amount_cents.try(:>=, 0) ||
+    credit_account && self.amount_cents.try(:<=, 0)
   end
 end
