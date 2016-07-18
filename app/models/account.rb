@@ -22,6 +22,9 @@ class Account < ActiveRecord::Base
 
   XML_ATTRS = {date: "FECHA", category: "CATEGORIA", sub_category: "SUB_CATEGORIA", notes: "DESCRIPCION"}
 
+  class AmountError < StandardError; end
+  class InvalidContentError < StandardError; end
+
   def increment_balance(amount)
     increment!(:balance_cents, amount.cents)
   end
@@ -36,29 +39,25 @@ class Account < ActiveRecord::Base
 
   def load_movements_from_xml(path)
     load_xml(path)
-    if valid_xml_schema?
-      Account.transaction do
-        Movement.transaction do
-          @xml.xpath("//Movimiento").map do |movement|
-            mov = create_instance(movement.xpath("VALOR"))
-            XML_ATTRS.each do |key, value|
-              mov.send("#{key}=".to_sym, movement.xpath(value).text)
-            end
-            mov.save!
-            mov.reconcile!
+    raise InvalidContentError unless valid_xml_schema?
+    Account.transaction do
+      Movement.transaction do
+        @xml.xpath("//Movimiento").map do |movement|
+          mov = create_instance(movement.xpath("VALOR"))
+          raise AmountError unless mov
+          XML_ATTRS.each do |key, value|
+            mov.send("#{key}=".to_sym, movement.xpath(value).text)
           end
+          mov.save!
+          mov.reconcile!
         end
-      end
-    else
-      @xsd.validate(@xml).each do |error|
-        puts error.message
       end
     end
   end
 
   private
   def load_xml(path)
-    @xml = File.open(path) { |f| Nokogiri::XML(f) }
+    @xml = File.open(path) { |f| Nokogiri::XML(f){ |config| config.strict } }
   end
 
   def create_instance(amount)
@@ -85,7 +84,7 @@ class Account < ActiveRecord::Base
   end
 
   def valid_xml_schema?
-    @xsd = Nokogiri::XML::Schema(File.read(Rails.root.join('lib', 'schemas', 'csv_processer.xsd')))
+    @xsd = Nokogiri::XML::Schema(File.read(Rails.root.join('lib', 'schemas', "csv_#{type}_processer.xsd")))
     @xsd.valid? @xml
   end
 

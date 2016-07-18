@@ -87,8 +87,8 @@ class CSVProcesser
 
   def generate_filename
     now = Time.now
-    begin_month = now.beginning_of_month.strftime("%d%Y%m")
-    end_month = now.end_of_month.strftime("%d%Y%m")
+    begin_month = now.beginning_of_month.strftime("%d%m%Y")
+    end_month = now.end_of_month.strftime("%d%m%Y")
     output || "cash#{begin_month}_#{end_month}.xml"
   end
 

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Movimientos">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Movimiento" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="FECHA" type="xs:date"/>
+              <xs:element name="CATEGORIA">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="income"/>
+                    <xs:enumeration value="transport"/>
+                    <xs:enumeration value="home"/>
+                    <xs:enumeration value="utilities"/>
+                    <xs:enumeration value="food"/>
+                    <xs:enumeration value="departmental"/>
+                    <xs:enumeration value="entertainment"/>
+                    <xs:enumeration value="medical"/>
+                    <xs:enumeration value="misc"/>
+                    <xs:enumeration value="bank"/>
+                    <xs:enumeration value="third"/>
+                    <xs:enumeration value="transfer"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SUB_CATEGORIA">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="salary"/>
+                    <xs:enumeration value="third"/>
+                    <xs:enumeration value="freelance"/>
+                    <xs:enumeration value="other"/>
+                    <xs:enumeration value="interests"/>
+                    <xs:enumeration value="virtual"/>
+                    <xs:enumeration value="transfer_in"/>
+                    <xs:enumeration value="metro"/>
+                    <xs:enumeration value="cab"/>
+                    <xs:enumeration value="bus"/>
+                    <xs:enumeration value="gas"/>
+                    <xs:enumeration value="toll"/>
+                    <xs:enumeration value="parking"/>
+                    <xs:enumeration value="rent"/>
+                    <xs:enumeration value="mortgage"/>
+                    <xs:enumeration value="house"/>
+                    <xs:enumeration value="furniture"/>
+                    <xs:enumeration value="EPM"/>
+                    <xs:enumeration value="UNE"/>
+                    <xs:enumeration value="cellphone"/>
+                    <xs:enumeration value="cable"/>
+                    <xs:enumeration value="laundry"/>
+                    <xs:enumeration value="groceries"/>
+                    <xs:enumeration value="restaurant"/>
+                    <xs:enumeration value="mecato"/>
+                    <xs:enumeration value="licour"/>
+                    <xs:enumeration value="clothing"/>
+                    <xs:enumeration value="books"/>
+                    <xs:enumeration value="magazines"/>
+                    <xs:enumeration value="apps"/>
+                    <xs:enumeration value="hardware"/>
+                    <xs:enumeration value="toys"/>
+                    <xs:enumeration value="apps_subscriptions"/>
+                    <xs:enumeration value="barber_shop"/>
+                    <xs:enumeration value="personal_items"/>
+                    <xs:enumeration value="movies"/>
+                    <xs:enumeration value="sports"/>
+                    <xs:enumeration value="theater"/>
+                    <xs:enumeration value="stadium"/>
+                    <xs:enumeration value="insurance"/>
+                    <xs:enumeration value="medicines"/>
+                    <xs:enumeration value="appointments"/>
+                    <xs:enumeration value="air_tickets"/>
+                    <xs:enumeration value="hotel"/>
+                    <xs:enumeration value="gift"/>
+                    <xs:enumeration value="other"/>
+                    <xs:enumeration value="nonprofit_entity"/>
+                    <xs:enumeration value="trip"/>
+                    <xs:enumeration value="fee"/>
+                    <xs:enumeration value="interests"/>
+                    <xs:enumeration value="debit_note"/>
+                    <xs:enumeration value="credit_note"/>
+                    <xs:enumeration value="other"/>
+                    <xs:enumeration value="loan"/>
+                    <xs:enumeration value="credit_card"/>
+                    <xs:enumeration value="cash"/>
+                    <xs:enumeration value="inversion"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DESCRIPCION" type="xs:string"/>
+              <xs:element name="VALOR" type="xs:decimal"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
