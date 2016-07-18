@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Movimientos>
+  <Movimiento>
+    <FECHA>2016-02-01</FECHA>
+    <CATEGORIA>income</CATEGORIA>
+    <SUB_CATEGORIA>third</SUB_CATEGORIA>
+    <DESCRIPCION/>
+    <VALOR>380000.0</VALOR>
+  </Movimiento>
+  <Movimiento>
+    <FECHA>2016-02-01</FECHA>
+    <CATEGORIA>transport</CATEGORIA>
+    <SUB_CATEGORIA>metsro</SUB_CATEGORIA>
+    <DESCRIPCION/>
+    <VALOR>-5000.0</VALOR>
+  </Movimiento>
+  <Movimiento>
+    <FECHA>2016-02-01</FECHA>
+    <CATEGORIA>home</CATEGORIA>
+    <SUB_CATEGORIA>house</SUB_CATEGORIA>
+    <DESCRIPCION/>
+    <VALOR>0.00</VALOR>
+  </Movimiento>
+</Movimientos>

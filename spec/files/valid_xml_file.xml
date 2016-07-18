@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Movimientos>
+  <Movimiento>
+    <FECHA>2016-02-01</FECHA>
+    <CATEGORIA>home</CATEGORIA>
+    <SUB_CATEGORIA>house</SUB_CATEGORIA>
+    <DESCRIPCION/>
+    <VALOR>-50000.00</VALOR>
+  </Movimiento>
+  <Movimiento>
+    <FECHA>2016-02-01</FECHA>
+    <CATEGORIA>income</CATEGORIA>
+    <SUB_CATEGORIA>third</SUB_CATEGORIA>
+    <DESCRIPCION/>
+    <VALOR>380000.0</VALOR>
+  </Movimiento>
+  <Movimiento>
+    <FECHA>2016-02-01</FECHA>
+    <CATEGORIA>home</CATEGORIA>
+    <SUB_CATEGORIA>house</SUB_CATEGORIA>
+    <DESCRIPCION/>
+    <VALOR>-50000.00</VALOR>
+  </Movimiento>
+  <Movimiento>
+    <FECHA>2016-02-01</FECHA>
+    <CATEGORIA>food</CATEGORIA>
+    <SUB_CATEGORIA>restaurant</SUB_CATEGORIA>
+    <DESCRIPCION/>
+    <VALOR>-25000</VALOR>
+  </Movimiento>
+</Movimientos>
