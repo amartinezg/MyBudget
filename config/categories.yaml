@@ -9,7 +9,8 @@ transport: ["metro",
     "cab",
     "bus",
     "gas",
-    "toll"]
+    "toll",
+    "parking"]
 home: ["rent",
     "mortgage",
     "house",
@@ -17,7 +18,8 @@ home: ["rent",
 utilities: ["EPM",
     "UNE",
     "cellphone",
-    "cable"]
+    "cable",
+    "laundry"]
 food: ["groceries",
     "restaurant",
     "mecato",
