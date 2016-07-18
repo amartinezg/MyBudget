@@ -29,6 +29,7 @@ class Movement < ActiveRecord::Base
   validate :account_currency, if: :account
 
   before_destroy :restore_account_balance
+  after_rollback :restore_account_balance
 
   scope :budgets, -> { where(type: 'Budget') }
   scope :expenses, -> { where(type: 'Expense') }
