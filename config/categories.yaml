@@ -54,4 +54,5 @@ bank: ["fee",
 third: ["loan"]
 transfer: ["credit_card",
     "cash",
-    "inversion"]
+    "inversion",
+    "savings"]
