@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Movimientos">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Movimiento" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="FECHA" type="xs:date"/>
+              <xs:element name="DESCRIPCION" type="xs:string"/>
+              <xs:element name="CATEGORIA">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="income"/>
+                    <xs:enumeration value="transfer"/>
+                    <xs:enumeration value="bank"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SUB_CATEGORIA">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="salary"/>
+                    <xs:enumeration value="third"/>
+                    <xs:enumeration value="freelance"/>
+                    <xs:enumeration value="other"/>
+                    <xs:enumeration value="interests"/>
+                    <xs:enumeration value="virtual"/>
+                    <xs:enumeration value="transfer_in"/>
+                    <xs:enumeration value="fee"/>
+                    <xs:enumeration value="interests"/>
+                    <xs:enumeration value="debit_note"/>
+                    <xs:enumeration value="credit_note"/>
+                    <xs:enumeration value="other"/>
+                    <xs:enumeration value="credit_card"/>
+                    <xs:enumeration value="cash"/>
+                    <xs:enumeration value="inversion"/>
+                    <xs:enumeration value="savings"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="VALOR" type="xs:decimal"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
